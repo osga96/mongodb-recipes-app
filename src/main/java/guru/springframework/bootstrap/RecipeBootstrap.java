@@ -38,7 +38,14 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
     public void onApplicationEvent(ContextRefreshedEvent event) {
         loadCategories();
         loadUom();
-        recipeRepository.saveAll(getRecipes());
+
+        List<Recipe> recipeList = getRecipes();
+
+        for (Recipe recipe:recipeList) {
+            recipeRepository.save(recipe);
+        }
+
+        /*recipeRepository.saveAll(recipeList);*/
         log.debug("Loading Bootstrap Data");
     }
 
